@@ -32,3 +32,19 @@ menudrawer-samples/*
 !menudrawer-samples/build.gradle
 
 .DS_store
+
+### Intellij ###
+.idea/
+*.iml
+
+### Gradle ###
+.gradle
+gradle/
+build/
+
+### Android ###
+# Local configuration file (sdk path, etc)
+local.properties
+com_crashlytics_export_strings.xml
+crashlytics-build.properties
+*.hprof
