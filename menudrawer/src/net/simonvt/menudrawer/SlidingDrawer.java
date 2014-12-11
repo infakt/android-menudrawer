@@ -180,7 +180,7 @@ public class SlidingDrawer extends DraggableDrawer {
      *
      * @param offsetPixels The number of pixels the content if offset.
      */
-    private void offsetMenu(int offsetPixels) {
+    protected void offsetMenu(int offsetPixels) {
         if (!mOffsetMenu || mMenuSize == 0) {
             return;
         }
@@ -291,7 +291,7 @@ public class SlidingDrawer extends DraggableDrawer {
         }
         mMenuContainer.measure(menuWidthMeasureSpec, menuHeightMeasureSpec);
 
-        final int contentWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec, 0, width);
+        final int contentWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec, 0, width - 144);
         final int contentHeightMeasureSpec = getChildMeasureSpec(widthMeasureSpec, 0, height);
         mContentContainer.measure(contentWidthMeasureSpec, contentHeightMeasureSpec);
 
