@@ -13,6 +13,7 @@ import android.util.AttributeSet;
  */
 public class OffsetSlidingDrawer extends SlidingDrawer {
 	private int INITIAL_OFFSET_PX = 55;
+	private OnOffsetChangedListener onOffsetChangedListener;
 
 	OffsetSlidingDrawer(Activity activity, int dragMode) {
 		super(activity, dragMode);
@@ -139,5 +140,17 @@ public class OffsetSlidingDrawer extends SlidingDrawer {
 	protected void setOffsetPixels(float offsetPixels) {
 		super.setOffsetPixels(offsetPixels);
 		mMenuVisible = offsetPixels > INITIAL_OFFSET_PX;
+		if (onOffsetChangedListener != null) {
+			float ratio = (offsetPixels - INITIAL_OFFSET_PX) / (1.0f * mMenuSize - INITIAL_OFFSET_PX);
+			onOffsetChangedListener.onOffsetChanged(ratio, mMenuSize, INITIAL_OFFSET_PX);
+		}
+	}
+
+	public void setOnOffsetChangedListener(OnOffsetChangedListener onOffsetChangedListener) {
+		this.onOffsetChangedListener = onOffsetChangedListener;
+	}
+
+	public interface OnOffsetChangedListener {
+		void onOffsetChanged(float ratio, int maxWidth, int initialOffset);
 	}
 }
