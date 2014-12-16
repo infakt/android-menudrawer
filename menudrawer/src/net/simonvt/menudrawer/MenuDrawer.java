@@ -458,12 +458,16 @@ public abstract class MenuDrawer extends ViewGroup {
 	 * @return The created MenuDrawer instance.
 	 */
 	public static MenuDrawer attach(Activity activity, Type type, Position position, int dragMode) {
+		return attach(activity, type, position, dragMode, -1);
+	}
+
+	public static MenuDrawer attach(Activity activity, Type type, Position position, int dragMode, int attachToView) {
 		MenuDrawer menuDrawer = createMenuDrawer(activity, dragMode, position, type);
 		menuDrawer.setId(R.id.md__drawer);
 
 		switch (dragMode) {
 			case MenuDrawer.MENU_DRAG_CONTENT:
-				attachToContent(activity, menuDrawer);
+				attachToView(activity, menuDrawer, attachToView);
 				break;
 
 			case MenuDrawer.MENU_DRAG_WINDOW:
@@ -513,12 +517,18 @@ public abstract class MenuDrawer extends ViewGroup {
 	 * Attaches the menu drawer to the content view.
 	 */
 	private static void attachToContent(Activity activity, MenuDrawer menuDrawer) {
+		attachToView(activity, menuDrawer, android.R.id.content);
+	}
+
+	private static void attachToView(Activity activity, MenuDrawer menuDrawer, int viewResId) {
+		if (viewResId <= 0)
+			viewResId = android.R.id.content;
 		/**
 		 * Do not call mActivity#setContentView.
 		 * E.g. if using with a ListActivity, Activity#setContentView is overridden and dispatched to
 		 * MenuDrawer#setContentView, which then again would call Activity#setContentView.
 		 */
-		ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
+		ViewGroup content = (ViewGroup) activity.findViewById(viewResId);
 		content.removeAllViews();
 		content.addView(menuDrawer, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	}
