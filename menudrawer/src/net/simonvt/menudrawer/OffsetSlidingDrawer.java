@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 public class OffsetSlidingDrawer extends SlidingDrawer {
 	private int INITIAL_OFFSET_PX = 55;
 	private OnOffsetChangedListener onOffsetChangedListener;
+	private int shadowTop = 0;
 
 	OffsetSlidingDrawer(Activity activity, int dragMode) {
 		super(activity, dragMode);
@@ -39,6 +40,25 @@ public class OffsetSlidingDrawer extends SlidingDrawer {
 	@Override
 	protected void drawOverlay(Canvas canvas) {
 		//do nothing
+	}
+
+	public void setShadowTop(int shadowTop) {
+		this.shadowTop = shadowTop;
+	}
+
+	@Override
+	protected void updateDropShadowRect() {
+		switch (getPosition()) {
+			case LEFT:
+				mDropShadowRect.top = shadowTop;
+				mDropShadowRect.bottom = getHeight();
+				mDropShadowRect.right = ViewHelper.getLeft(mContentContainer);
+				mDropShadowRect.left = mDropShadowRect.right - mDropShadowSize;
+				break;
+			default:
+				super.updateDropShadowRect();
+				break;
+		}
 	}
 
 	@Override
