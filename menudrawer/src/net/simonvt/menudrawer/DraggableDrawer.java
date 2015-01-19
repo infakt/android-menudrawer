@@ -326,7 +326,7 @@ public abstract class DraggableDrawer extends MenuDrawer {
         mScroller.abortAnimation();
         final int finalX = mScroller.getFinalX();
         setOffsetPixels(finalX);
-        setDrawerState(finalX == 0 ? STATE_CLOSED : STATE_OPEN);
+        setDrawerState(getDrawerStateForOffset(finalX));
         stopLayerTranslation();
     }
 
@@ -356,7 +356,7 @@ public abstract class DraggableDrawer extends MenuDrawer {
         final int dx = position - startX;
         if (dx == 0 || !animate) {
             setOffsetPixels(position);
-            setDrawerState(position == 0 ? STATE_CLOSED : STATE_OPEN);
+            setDrawerState(getDrawerStateForOffset(position));
             stopLayerTranslation();
             return;
         }
@@ -374,7 +374,11 @@ public abstract class DraggableDrawer extends MenuDrawer {
         animateOffsetTo(position, duration);
     }
 
-    protected void animateOffsetTo(int position, int duration) {
+	protected int getDrawerStateForOffset(int position) {
+		return position == 0 ? STATE_CLOSED : STATE_OPEN;
+	}
+
+	protected void animateOffsetTo(int position, int duration) {
         final int startX = (int) mOffsetPixels;
         final int dx = position - startX;
 

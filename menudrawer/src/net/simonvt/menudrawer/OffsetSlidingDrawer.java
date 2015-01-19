@@ -12,7 +12,7 @@ import android.util.AttributeSet;
  * @author rciurkot
  */
 public class OffsetSlidingDrawer extends SlidingDrawer {
-	private int INITIAL_OFFSET_PX = 55;
+	private int INITIAL_OFFSET_PX = 80;
 	private OnOffsetChangedListener onOffsetChangedListener;
 	private int shadowTop = 0;
 
@@ -103,6 +103,11 @@ public class OffsetSlidingDrawer extends SlidingDrawer {
 	@Override
 	public void closeMenu(boolean animate) {
 		animateOffsetTo(INITIAL_OFFSET_PX, 0, animate);
+	}
+
+	@Override
+	protected int getDrawerStateForOffset(int position) {
+		return position == INITIAL_OFFSET_PX ? STATE_CLOSED : STATE_OPEN;
 	}
 
 	@Override
