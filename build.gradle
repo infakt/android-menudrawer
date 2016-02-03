@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:${project.ANDROID_BUILD_TOOLS_GRADLE_VERSION}"
+//        classpath "com.android.tools.build:gradle:${project.ANDROID_BUILD_TOOLS_GRADLE_VERSION}"
     }
 }
 
