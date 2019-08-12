@@ -20,22 +20,3 @@ android {
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
     }
 }
-
-checkstyle {
-    configFile project.file('../checkstyle.xml')
-    showViolations true
-}
-
-android.libraryVariants.all { variant ->
-    def name = variant.buildType.name
-
-    def checkstyle = project.tasks.create "checkstyle${name.capitalize()}", Checkstyle
-    checkstyle.dependsOn variant.javaCompile
-    checkstyle.source variant.javaCompile.source
-    checkstyle.classpath = project.fileTree(variant.javaCompile.destinationDir)
-    checkstyle.exclude('**/BuildConfig.java')
-    checkstyle.exclude('**/R.java')
-    project.tasks.getByName("check").dependsOn checkstyle
-}
-
-//apply from: 'https://raw.github.com/SimonVT/gradle-mvn-push/0.11/gradle-mvn-push.gradle'
